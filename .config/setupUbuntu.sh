@@ -4,7 +4,7 @@
 # This will setup a new Ubuntu machine 
 
 # Check if we have completed first few tasks
-ZSH_INSTALLED=~/.zsh_installed
+ZSH_INSTALLED=.zsh_installed
 
 if [ ! -f "$ZSH_INSTALLED" ]; then
 
@@ -22,7 +22,7 @@ if [ ! -f "$ZSH_INSTALLED" ]; then
     echo "Changing shell to zsh"
     chsh -s $(which zsh)
     # Create a temporary file to tell the script that step 1 done next time this setup is run
-    touch ZSH_INSTALLED
+    touch $ZSH_INSTALLED
     echo "Shell changed to zsh. Please logout and log back in"
 else
     # make sure we are in home folder
