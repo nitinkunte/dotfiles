@@ -1,0 +1,27 @@
+
+# navigation shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias cd..='cd ..'
+alias .....='cd ../../../..'
+
+# Directory listing
+alias ll="exa -a -l --group-directories-first "
+alias ls="exa "
+
+# Other aliases
+alias sudo="sudo "
+alias update="source ~/.zshrc"
+
+# utilities
+alias myip="curl http://ipecho.net/plain; echo"
+alias localip="ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p'"
+
+# shortcut to edit dot files
+alias zshrc='micro ~/.zshrc'
+alias mya="micro .myconfigs/.aliases"
+alias myf="micro .myconfigs/.functions"
+
+
+
