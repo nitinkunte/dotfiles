@@ -58,7 +58,7 @@ mnk_setup_ubuntu(){
     
     mnk_info "Installing exa"
     # Run code specifc to Ubuntu 20.04 = focal
-    if [ $ubuntu_release == "focal" ]; then
+    if [ $ubuntu_release == "focal" ] then
         # for Ubuntu 20.04 we need to install from source for that we need Rust Env Cargo
         sudo apt install -y unzip
         # Get the latest version tag of exa release and assign it to variable.
@@ -70,8 +70,9 @@ mnk_setup_ubuntu(){
         # Remove the ZIP archive as it is no longer needed
         rm -rf exa.zip
     else
-    sudo apt install exa
+        sudo apt install exa
     fi
+
     mnk_info "exa installed. This will replace 'ls' command"
 
     if ! mnk_CommandExists zsh; then
