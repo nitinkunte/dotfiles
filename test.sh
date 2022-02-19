@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#### - this file is just for testing. Need to be deleted later
+
 # BEGIN: Read functions from helper_functions.
 MNK_HELPER_FUNCTIONS="helper_functions"
 if [[ ! -f "${MNK_HELPER_FUNCTIONS}" ]]; then

@@ -1,36 +1,91 @@
-
 #!/bin/bash
+#
+# This script should be run via curl:
+#   sh -c "$(curl -fsSL https://raw.githubusercontent.com/nitinkunte/dotfiles/main/setupUbuntu.sh)"
+# or via wget:
+#   sh -c "$(wget -qO- https://raw.githubusercontent.com/nitinkunte/dotfiles/main/tools/setupUbuntu.sh)"
+# or via fetch:
+#   sh -c "$(fetch -o - https://raw.githubusercontent.com/nitinkunte/dotfiles/main/tools/setupUbuntu.sh)"
+#
+# As an alternative, you can first download the install script and run it afterwards:
+#   wget https://raw.githubusercontent.com/nitinkunte/dotfiles/tools/setupUbuntu.sh
+#   sh setupUbuntu.sh
+#
 
 # This will setup a new Ubuntu machine 
+# display error in red
+mnk_error()
+{
+    whatToEcho=$1
+    # red
+    echo "`tput setaf 1`$whatToEcho`tput sgr0`"
+}
+# display warning in magenta
+mnk_warning()
+{
+    whatToEcho=$1
+    # magenta
+    echo "`tput setaf 5`$whatToEcho`tput sgr0`"
+}
+# display information in blue
+mnk_info()
+{
+    whatToEcho=$1
+    # blue
+    echo "`tput setaf 4`$whatToEcho`tput sgr0`"
+}
+mnk_CommandExists() {
+  command -v "$@" >/dev/null 2>&1
+}
 
-# first make the setupDotFile an exe
-chmod +x setupDotfiles.sh
+mnk_setup_ubuntu(){
 
-# make sure we are in home folder
-cd ~
+    # make sure we are in home folder
+    cd $HOME
 
-# update system
-sudo apt update 
+    # update system
+    sudo apt update 
 
-# confirm for upgrade
-sudo apt upgrade
+    # confirm for upgrade
+    sudo apt upgrade
 
-# install zsh and Micro
-echo "Installing zsh and micro"
-sudo apt install zsh micro
+    # install zsh and Micro
+    mnk_info "Installing zsh and micro"
+    sudo apt install zsh micro
 
-# install exa - replacement for ls
-# for Ubuntu 20.04 we need to install from source for that we need Rust Env Cargo
-echo "Installing cargo to install exa"
-sudo apt install cargo
-sudo cargo install exa
-echo "exa installed. This will replace 'ls' command"
+    # install exa - replacement for ls
+    ubuntu_release=$(lsb_release -cs)
+    
+    mnk_info "Installing exa"
+    # Run code specifc to Ubuntu 20.04 = focal
+    if [ $ubuntu_release == "focal" ]; then
+        # for Ubuntu 20.04 we need to install from source for that we need Rust Env Cargo
+        sudo apt install -y unzip
+        # Get the latest version tag of exa release and assign it to variable.
+        EXA_VERSION=$(curl -s "https://api.github.com/repos/ogham/exa/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+        # Download zip archive from releases page of the exa repository.
+        curl -Lo exa.zip "https://github.com/ogham/exa/releases/latest/download/exa-linux-x86_64-v${EXA_VERSION}.zip"
+        # Extract executable file from a ZIP archive:
+        sudo unzip -q exa.zip bin/exa -d /usr/local
+        # Remove the ZIP archive as it is no longer needed
+        rm -rf exa.zip
+    else
+    sudo apt install exa
+    fi
+    mnk_info "exa installed. This will replace 'ls' command"
 
-# change shell to zsh
-echo "Changing shell to zsh"
-sudo -u $SUDO_USER chsh -s $(which zsh)
+    if ! mnk_CommandExists zsh; then
+        mnk_error "Something went wrong. zsh is not installed. Please try again..."
+        exit 1
+    fi
+    # change shell to zsh
+    echo "Changing shell to zsh"
+    sudo -u $(logname) chsh -s $(which zsh)
 
-echo "Shell changed to zsh. Please logout and log back in"
+    echo "Shell changed to zsh. Please logout and log back in"
+}
+
+mnk_setup_ubuntu
 
 
 
