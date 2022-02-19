@@ -70,4 +70,11 @@ mnk_setup_dotfiles(){
     echo
 }
 
-mnk_setup_dotfiles
+mnk_checkZsh(){
+    if ! mnk_CommandExists zsh; then
+        mnk_error "zsh is not installed. Please install zsh and then retry."
+        exit 1
+    fi
+}
+
+mnk_checkZsh

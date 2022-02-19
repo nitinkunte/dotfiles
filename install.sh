@@ -171,8 +171,8 @@ mnk_main() {
     shift
   done
 
-  if ! command_exists zsh; then
-    mnk_error "Zsh is not installed. Please install zsh and then retry."
+  if ! mnk_CommandExists zsh; then
+    mnk_error "zsh is not installed. Please install zsh and then retry."
     exit 1
   fi
 
