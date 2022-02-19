@@ -28,9 +28,8 @@ echo "exa installed. This will replace 'ls' command"
 
 # change shell to zsh
 echo "Changing shell to zsh"
-chsh -s $(which zsh)
-# Create a temporary file to tell the script that step 1 done next time this setup is run
-touch $ZSH_INSTALLED
+sudo -u $SUDO_USER chsh -s $(which zsh)
+
 echo "Shell changed to zsh. Please logout and log back in"
 
 

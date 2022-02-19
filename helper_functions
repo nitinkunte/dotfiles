@@ -1,0 +1,173 @@
+
+# mnk_initialize
+#
+# Should be called at the beginning of every shell script.
+#
+# Exits your script if you try to use an uninitialised variable and exits your
+# script as soon as any statement fails to prevent errors snowballing into
+# serious issues.
+#
+# Example:
+# mnk_initialize
+#
+#
+function mnk_initialize {
+  # Will exit script if we would use an uninitialised variable:
+  set -o nounset
+  # Will exit script when a simple command (not a control structure) fails:
+  set -o errexit
+}
+
+# ---------
+# mnk_info()
+#
+# ---------
+# Information to user. Blue color: Param 1 = text to echo 
+#
+# Example:
+#   mnk_info "some text to echo" 
+#
+mnk_info()
+{
+    inputText=$1
+    mycolor=blue
+    #echo "echo from mnk_warning=$warning"
+    mnk_echo "$inputText" "$mycolor"
+}
+
+# ---------
+# mnk_warning()
+#
+# ---------
+# Warning message. Magenta color: Param 1 = text to echo 
+#
+# Example:
+#   mnk_warning "some warning text to echo" 
+#
+mnk_warning()
+{
+    inputText=$1
+    mycolor=magenta
+    #echo "echo from mnk_warning=$warning"
+    mnk_echo "$inputText" "$mycolor"
+}
+
+# ---------
+# mnk_error()
+#
+# ---------
+# Show error to user. Red color: Param 1 = text to echo 
+#
+# Example:
+#   mnk_error "some error text to echo" 
+#
+mnk_error()
+{
+    inputText=$1
+    mycolor=red
+    #echo "echo from mnk_warning=$warning"
+    mnk_echo "$inputText" "$mycolor"
+}
+
+# ---------
+# mnk_continue()
+#
+# ---------
+# Asks user a question where answer is either yes or no. Green color: Param 1 = question to ask 
+#
+# Returns user selection 
+#
+# Example:
+#    response=$(mnk_continue)
+#    echo "return value is = $response"
+#
+mnk_continue()
+{
+    RETVAL=
+    question="`tput setaf 2`Do you want to continue? (y/n):`tput sgr0`"
+    while true
+    do
+        read -r -p "$question" input
+    
+        case $input in
+                [yY][eE][sS]|[yY])
+                    # echo "Yes"
+                    RETVAL='y'
+                    break
+                    ;;
+                [nN][oO]|[nN])
+                    # echo "No"
+                    RETVAL='n'
+                    break
+                    ;;
+                *)
+                    echo "Invalid input..."
+                    ;;
+        esac      
+    done
+    echo $RETVAL
+}
+
+# ---------
+# mnk_echo()
+#
+# ---------
+# Write something to console in color: Param 1 = text to echo & Param 2 = color
+#   :: choose from one the following colors
+#       black=`tput setaf 0`
+#       red=`tput setaf 1`
+#       green=`tput setaf 2`
+#       yellow=`tput setaf 3`
+#       blue=`tput setaf 4`
+#       magenta=`tput setaf 5`
+#       cyan=`tput setaf 6`
+#       white==`tput setaf 7`
+#       bold=`tput bold`
+#       underline=`tput smul`
+#       faint=`tput dim`
+#
+# Example:
+#   mnk_echo "some text to echo" blue
+#
+mnk_echo()
+{
+    lreset=`tput sgr0`
+    whatToEcho=$1
+    mycolor=$2
+    finalEchoString=
+    case $mycolor in
+        black)
+            echo "`tput setaf 0`$whatToEcho$lreset"
+            ;;
+        red)
+            echo "`tput setaf 1`$whatToEcho$lreset"
+            ;;
+        green)
+            echo "`tput setaf 2`$whatToEcho$lreset"
+            ;;
+        yellow)
+            echo "`tput setaf 3`$whatToEcho$lreset"
+            ;;
+        blue)
+            echo "`tput setaf 4`$whatToEcho$lreset"
+            ;;
+        magenta)
+            echo "`tput setaf 5`$whatToEcho$lreset"
+            ;;
+        cyan)
+            echo "`tput setaf 6`$whatToEcho$lreset"
+            ;;
+        white)
+            echo "`tput setaf 7`$whatToEcho$lreset"
+            ;;
+        *)
+            echo "$whatToEcho"
+            ;;
+    esac
+
+}
+
+
+
+
+
