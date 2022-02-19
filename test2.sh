@@ -5,7 +5,7 @@
 USER=${USER:-$(id -u -n)}
 REPO=${REPO:-nitinkunte/dotfiles}
 REMOTE=${REMOTE:-https://github.com/${REPO}.git}
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-main}
 MY_CONFIG_DIR=$HOME/Downloads/.myconfigs
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 #
@@ -62,9 +62,9 @@ mnk_setup_dotfiles(){
     && git remote add origin "$REMOTE" \
     && git fetch --depth=1 origin \
     && git checkout -b "$BRANCH" "origin/$BRANCH" || {
-    rm -rf "$MY_CONFIG_DIR"
-    fmt_error "git clone of our dotfiles repo failed"
-    exit 1
+        rm -rf "$MY_CONFIG_DIR"
+        mnk_error "git clone of our dotfiles repo failed"
+        exit 1
     }
 
     echo

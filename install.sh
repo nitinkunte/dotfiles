@@ -36,35 +36,12 @@
 set -e
 
 
-
-# ---------
-# mnk_echo()
-#
-# ---------
-# Write something to console in color: Param 1 = text to echo & Param 2 = color
-#   :: choose from one the following colors
-#       black=`tput setaf 0`
-#       red=`tput setaf 1`
-#       green=`tput setaf 2`
-#       yellow=`tput setaf 3`
-#       blue=`tput setaf 4`
-#       magenta=`tput setaf 5`
-#       cyan=`tput setaf 6`
-#       white==`tput setaf 7`
-#       bold=`tput bold`
-#       underline=`tput smul`
-#       faint=`tput dim`
-#
-# Example:
-#   mnk_echo "some text to echo" blue
-#
-
 # ------ GLOBAL VARIABLES START ------------------
 #
 USER=${USER:-$(id -u -n)}
 REPO=${REPO:-nitinkunte/dotfiles}
 REMOTE=${REMOTE:-https://github.com/${REPO}.git}
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-main}
 MY_CONFIG_DIR=$HOME/.myconfigs
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 #
@@ -124,7 +101,7 @@ mnk_setup_dotfiles(){
 
     mnk_info "Creating place for our dotfiles"
 
-    # Manual clone with git config options to support git < v1.7.2
+     # Manual clone with git config options to support git < v1.7.2
     git init "$MY_CONFIG_DIR" && cd "$MY_CONFIG_DIR" \
     && git config core.eol lf \
     && git config core.autocrlf false \
@@ -136,10 +113,11 @@ mnk_setup_dotfiles(){
     && git remote add origin "$REMOTE" \
     && git fetch --depth=1 origin \
     && git checkout -b "$BRANCH" "origin/$BRANCH" || {
-    rm -rf "$MY_CONFIG_DIR"
-    fmt_error "git clone of our dotfiles repo failed"
-    exit 1
+        rm -rf "$MY_CONFIG_DIR"
+        mnk_error "git clone of our dotfiles repo failed"
+        exit 1
     }
+
 
     echo
 }
