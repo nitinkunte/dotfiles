@@ -151,7 +151,7 @@ mnk_setup_zshrc() {
 
     mv -f $MY_CONFIG_DIR/.zshrc ~/.zshrc
 
-    source ~/.zshrc
+    . ~/.zshrc
     echo
 }
 
