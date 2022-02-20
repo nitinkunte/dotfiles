@@ -47,24 +47,58 @@ KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 #
 # ------ GLOBAL VARIABLES END ------------------
 
+# mnk_fileExists file
+#
+# Makes sure that the given regular file exists. Thus, is not a directory or device file.
+#
+# Example:
+# response=$(mnk_fileExists "file-to-be-check")
+#    0 = false; else true
+#
+function mnk_fileExists {
+    local file=${1}
+    if [[ ! -f "${file}" ]]; then
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
+# mnk_fileDoesNotExists file
+#
+# Makes sure that the given file does not exist.
+#
+# Example:
+# response=$(mnk_fileDoesNotExists "file-to-be-written-in-a-moment")
+#    0 = false; else true
+#
+function mnk_fileDoesNotExists {
+    local file=${1}
+    if [[ -e "${file}" ]]; then
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
 # display error in red
 mnk_error()
 {
-    whatToEcho=$1
+    local whatToEcho=$1
     # red
     echo "`tput setaf 1`$whatToEcho`tput sgr0`"
 }
 # display warning in magenta
 mnk_warning()
 {
-    whatToEcho=$1
+    local whatToEcho=$1
     # magenta
     echo "`tput setaf 5`$whatToEcho`tput sgr0`"
 }
 # display information in blue
 mnk_info()
 {
-    whatToEcho=$1
+    local whatToEcho=$1
     # blue
     echo "`tput setaf 4`$whatToEcho`tput sgr0`"
 }
@@ -118,8 +152,6 @@ mnk_setup_dotfiles(){
         mnk_error "git clone of our dotfiles repo failed"
         exit 1
     }
-
-
     echo
 }
 
@@ -161,28 +193,36 @@ mnk_print_success(){
 
 mnk_main() {
 
-  # Parse arguments
-  while [ $# -gt 0 ]; do
-    case $1 in
-      # --unattended) RUNZSH=no; CHSH=no ;;
-      # --skip-chsh) CHSH=no ;;
-      --keep-zshrc) KEEP_ZSHRC=yes ;;
-    esac
-    shift
-  done
+    # Parse arguments
+    while [ $# -gt 0 ]; do
+        case $1 in
+            # --unattended) RUNZSH=no; CHSH=no ;;
+            # --skip-chsh) CHSH=no ;;
+            --keep-zshrc) KEEP_ZSHRC=yes ;;
+        esac
+        shift
+    done
 
-  if ! mnk_CommandExists zsh; then
-    mnk_error "zsh is not installed. Please install zsh and then retry."
-    exit 1
-  fi
+    if ! mnk_CommandExists zsh; then
+        mnk_error "zsh is not installed. Please install zsh and then retry."
+        exit 1
+    fi
 
-  mnk_setup_ohmyzsh
-  mnk_setup_dotfiles
-  mnk_setup_zshrc
-  
-  eval "source ~/.zshrc"
+    # check if Oh My Zsh is already installed. If not, install it.
+    local response=$(mnk_fileDoesNotExists "~/.oh-my-zsh/oh-my-zsh.sh")
+    if [ $response == "1"]; then
+        mnk_setup_ohmyzsh
+    else
+        echo
+        mnk_info "Oh My Zsh is already installed. Skipping that part..."
+    fi
 
-  mnk_print_success
+    mnk_setup_dotfiles
+    mnk_setup_zshrc
+
+    eval "source ~/.zshrc"
+
+    mnk_print_success
   
 }
 

@@ -12,28 +12,62 @@
 #   sh setupUbuntu.sh
 #
 
-# This will setup a new Ubuntu machine 
+# mnk_fileExists file
+#
+# Makes sure that the given regular file exists. Thus, is not a directory or device file.
+#
+# Example:
+# response=$(mnk_fileExists "file-to-be-check")
+#    0 = false; else true
+#
+function mnk_fileExists {
+    local file=${1}
+    if [[ ! -f "${file}" ]]; then
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
+# mnk_fileDoesNotExists file
+#
+# Makes sure that the given file does not exist.
+#
+# Example:
+# response=$(mnk_fileDoesNotExists "file-to-be-written-in-a-moment")
+#    0 = false; else true
+#
+function mnk_fileDoesNotExists {
+    local file=${1}
+    if [[ -e "${file}" ]]; then
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
 # display error in red
 mnk_error()
 {
-    whatToEcho=$1
+    local whatToEcho=$1
     # red
     echo "`tput setaf 1`$whatToEcho`tput sgr0`"
 }
 # display warning in magenta
 mnk_warning()
 {
-    whatToEcho=$1
+    local whatToEcho=$1
     # magenta
     echo "`tput setaf 5`$whatToEcho`tput sgr0`"
 }
 # display information in blue
 mnk_info()
 {
-    whatToEcho=$1
+    local whatToEcho=$1
     # blue
     echo "`tput setaf 4`$whatToEcho`tput sgr0`"
 }
+
 mnk_CommandExists() {
   command -v "$@" >/dev/null 2>&1
 }
@@ -87,6 +121,7 @@ mnk_setup_ubuntu(){
     echo "Shell changed to zsh. Please logout and log back in"
 }
 
+# call our main function to run the script
 mnk_setup_ubuntu
 
 

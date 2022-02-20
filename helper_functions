@@ -75,8 +75,8 @@ mnk_UserCanSudo() {
 #
 mnk_info()
 {
-    inputText=$1
-    mycolor=blue
+    local inputText=$1
+    local mycolor=blue
     #echo "echo from mnk_warning=$warning"
     mnk_echo "$inputText" "$mycolor"
 }
@@ -92,8 +92,8 @@ mnk_info()
 #
 mnk_warning()
 {
-    inputText=$1
-    mycolor=magenta
+    local inputText=$1
+    local mycolor=magenta
     #echo "echo from mnk_warning=$warning"
     mnk_echo "$inputText" "$mycolor"
 }
@@ -109,11 +109,47 @@ mnk_warning()
 #
 mnk_error()
 {
-    inputText=$1
-    mycolor=red
+    local inputText=$1
+    local mycolor=red
     #echo "echo from mnk_warning=$warning"
     mnk_echo "$inputText" "$mycolor"
 }
+
+
+# mnk_fileExists file
+#
+# Makes sure that the given regular file exists. Thus, is not a directory or device file.
+#
+# Example:
+# response=$(mnk_fileExists "file-to-be-check")
+#    0 = false; else true
+#
+function mnk_fileExists {
+    local file=${1}
+    if [[ ! -f "${file}" ]]; then
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
+# mnk_fileDoesNotExists file
+#
+# Makes sure that the given file does not exist.
+#
+# Example:
+# response=$(mnk_fileDoesNotExists "file-to-be-written-in-a-moment")
+#    0 = false; else true
+#
+function mnk_fileDoesNotExists {
+    local file=${1}
+    if [[ -e "${file}" ]]; then
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
 
 # ---------
 # mnk_continue()

@@ -30,13 +30,10 @@ mnk_CommandExists git || {
     exit 1
 }
 
-# Create .myconfigs folder
-echo "Creating $MY_CONFIG_DIR folder"
-mkdir -p $MY_CONFIG_DIR
+response=$(mnk_fileDoesNotExists "~/.oh-my-zsh/oh-my-zsh.sh")
+if [ $response == "1"]; then
 
-echo "Cloning our repo to $MY_CONFIG_DIR"
-cd $MY_CONFIG_DIR
-git clone --bare $REPO
+fi
 
 
 mnk_echo "Color yellow" yellow
@@ -47,6 +44,3 @@ mnk_warning "This is a warning"
 
 mnk_error "Error encountered"
 
-#mnk_continue 
-response=$(mnk_continue)
-echo "return value is = $response"
