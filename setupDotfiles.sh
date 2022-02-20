@@ -68,6 +68,7 @@ mnk_info()
     # blue
     echo "`tput setaf 4`$whatToEcho`tput sgr0`"
 }
+
 mnk_CommandExists() {
   command -v "$@" >/dev/null 2>&1
 }
@@ -151,7 +152,6 @@ mnk_setup_zshrc() {
 
     mv -f $MY_CONFIG_DIR/.zshrc ~/.zshrc
 
-    . ~/.zshrc
     echo
 }
 
@@ -179,6 +179,8 @@ mnk_main() {
   mnk_setup_ohmyzsh
   mnk_setup_dotfiles
   mnk_setup_zshrc
+  
+  eval "source ~/.zshrc"
 
   mnk_print_success
   
