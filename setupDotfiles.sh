@@ -228,7 +228,7 @@ mnk_main() {
     mnk_setup_dotfiles
     mnk_setup_zshrc
 
-    source ~/.zshrc
+    # source ~/.zshrc
 
     mnk_print_success
   
