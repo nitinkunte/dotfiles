@@ -1,23 +1,15 @@
 #!/bin/bash
 #
-# ================== Script does this ===========================
-# 1 - update the system
-# 2 - upgrade the system
-# 3 - install zsh and Micro
-# 4 - install exa - replacement for ls
-# 5 - change shell to zsh
-# ===============================================================
-#
 # This script should be run via curl:
-#   sh -c "$(curl -fsSL https://raw.githubusercontent.com/nitinkunte/dotfiles/main/setupUbuntu.sh)"
+#   sh -c "$(curl -fsSL https://raw.githubusercontent.com/nitinkunte/dotfiles/main/setupDesktop.sh)"
 # or via wget:
-#   sh -c "$(wget -qO- https://raw.githubusercontent.com/nitinkunte/dotfiles/main/tools/setupUbuntu.sh)"
+#   sh -c "$(wget -qO- https://raw.githubusercontent.com/nitinkunte/dotfiles/main/tools/setupDesktop.sh)"
 # or via fetch:
-#   sh -c "$(fetch -o - https://raw.githubusercontent.com/nitinkunte/dotfiles/main/tools/setupUbuntu.sh)"
+#   sh -c "$(fetch -o - https://raw.githubusercontent.com/nitinkunte/dotfiles/main/tools/setupDesktop.sh)"
 #
 # As an alternative, you can first download the install script and run it afterwards:
-#   wget https://raw.githubusercontent.com/nitinkunte/dotfiles/tools/setupUbuntu.sh
-#   sh setupUbuntu.sh
+#   wget https://raw.githubusercontent.com/nitinkunte/dotfiles/tools/setupDesktop.sh
+#   sh setupDesktop.sh
 #
 
 # mnk_fileExists file
@@ -80,20 +72,24 @@ mnk_CommandExists() {
   command -v "$@" >/dev/null 2>&1
 }
 
-mnk_setup_ubuntu(){
+mnk_setup_desktop(){
 
     # make sure we are in home folder
     cd $HOME
 
-    # update system
-    sudo apt update 
+    # update & upgrade the system
+    sudo apt update && sudo apt upgrade -y 
 
-    # confirm for upgrade
-    sudo apt upgrade
+    # install wireguard
+    mnk_info "Installing wireguard"
+    sudo apt install wireguard
+    # add a link to resolvconf so it does not error out with wg-quick
+    sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
 
-    # install zsh and Micro
-    mnk_info "Installing zsh and micro"
-    sudo apt install zsh micro
+    # install budgie desktop
+    mnk_info "Installing budgie desktop"
+    mnk_warning "This will take some time and you will have to reboot"
+    sudo apt install ubuntu-budgie-desktop
 
     # install exa - replacement for ls
     ubuntu_release=$(lsb_release -cs)
@@ -130,7 +126,7 @@ mnk_setup_ubuntu(){
 }
 
 # call our main function to run the script
-mnk_setup_ubuntu
+mnk_setup_desktop
 
 
 

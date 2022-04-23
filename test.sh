@@ -32,7 +32,9 @@ mnk_CommandExists git || {
 
 response=$(mnk_fileDoesNotExists "~/.oh-my-zsh/oh-my-zsh.sh")
 if [ $response == "1"]; then
-
+  mnk_warning "File does not exist"
+else
+  mnk_info "File Exists"
 fi
 
 

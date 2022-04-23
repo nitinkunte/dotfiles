@@ -1,5 +1,13 @@
 #!/bin/sh
 #
+# ================== Script does this ===========================
+# 1 - check if option to user wants to keep existing zshrc
+# 2 - ensure zsh has been installed
+# 3 - install Oh My Zsh if it has not been already installed
+# 4 - clone the dot files
+# 5 - update .zshrc to use dotfiles
+# ===============================================================
+#
 # This script should be run via curl:
 #   sh -c "$(curl -fsSL https://raw.githubusercontent.com/nitinkunte/dotfiles/main/setupDotfiles.sh)"
 # or via wget:
@@ -220,7 +228,7 @@ mnk_main() {
     mnk_setup_dotfiles
     mnk_setup_zshrc
 
-    eval "source ~/.zshrc"
+    source ~/.zshrc
 
     mnk_print_success
   
