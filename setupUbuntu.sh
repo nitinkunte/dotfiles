@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # ================== Script does this ===========================
 # 1 - update the system
