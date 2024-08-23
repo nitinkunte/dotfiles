@@ -43,11 +43,11 @@ sudo apt install spice-vdagent qemu-guest-agent spice-webdavd
     ```
     To ensure it the folder share sticks after reboot, add the `share	/media/share	virtiofs	rw,nofail	0	0` to `/etc/fstab`. You can use the following snippet. ***It only works with bash NOT fish.***
     ``` sh
-        sudo tee -a /etc/fstab > /dev/null <<EOT
+    sudo tee -a /etc/fstab > /dev/null <<EOT
 
-        # Load shared folder
-        share	/media/share	virtiofs	rw,nofail	0	0
-        EOT
+    # Load shared folder
+    share	/media/share	virtiofs	rw,nofail	0	0
+    EOT
     ```
     >Tips: 1> The words need to be seperated by a tab. 2> Make sure you are in bash shell not **fish**
 
@@ -61,10 +61,18 @@ sudo apt install spice-vdagent qemu-guest-agent spice-webdavd
 
 >NOTE: If you get error about permissions, you may need to run the following command
 ``` sh
-sudo chown -R $USER /media/SharedWithVM
+sudo chown -R $USER /media/share/SharedWithVM
 ```
+### Add alias for fish
+#### Add alias for getting local IP to *fish shell*
+``` sh
+alias mylocalip="hostname -I"
+```
+#### Add alias for getting public IP to *fish shell*
 
-
+``` sh
+alias myip="dig +short txt ch whoami.cloudflare @1.0.0.1"
+```
 
 
 ## Install Desktop
@@ -205,15 +213,7 @@ Here are some other things to add to make it easier to use.
 3. In *Layout* section, open **Additional Layout Options**.
 4. Expand **Ctrl position** and select **Swap Left Win with Left Ctrl**
 
-#### Add alias for getting local IP to *fish shell*
-``` sh
-alias mylocalip="hostname -I"
-```
-#### Add alias for getting public IP to *fish shell*
 
-``` sh
-alias myip="dig +short txt ch whoami.cloudflare @1.0.0.1"
-```
 #### Add following extensions to VS Code
 1. Code Spell Checker by Street Side Software
 2. WordCounter by Etienne Faisant
