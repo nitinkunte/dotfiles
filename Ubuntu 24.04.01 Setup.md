@@ -10,6 +10,21 @@ Check Ubuntu site to download the latest server version of Ubuntu 24.04.01. Make
 
 >Tips: You can change the logo by selecting custom while editing the VM
 
+Here are some images for setup in UTM.
+### Boot 
+![boot](./img/boot.png)
+
+### System 
+![boot](./img/system.png)
+
+### Network 
+![boot](./img/network.png)
+
+### Virtualization 
+![boot](./img/virtualization.png)
+
+
+
 ## Setting up the base version for Ubuntu Server
 Update and upgrade all packages before installing anything else
 ``` sh
@@ -202,6 +217,17 @@ sudo apt install calibre
 
 ``` sh
 sudo apt install terminator
+```
+
+#### Autokey (optional)
+This is similar to Keyboard Maestro on Mac or better still AutoHotKey on Windows.
+Follow instructions on https://github.com/autokey/autokey/wiki/Installing#debian-and-derivatives 
+
+After you obtained the Debian packages, open a terminal at the directory containing the packages and use the following commands to install the packages:
+``` sh
+VERSION="0.96.0"    # substitute with the version you downloaded
+sudo dpkg --install autokey-common_${VERSION}_all.deb autokey-gtk_${VERSION}_all.deb
+sudo apt --fix-broken install
 ```
 
 ### Other stuff
