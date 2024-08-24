@@ -36,7 +36,7 @@ wmctrl -m
 ``` sh
 sudo apt-get install wmctrl
 ```
-> *For some reason this command is not working. Try using `neofetch` or *
+> *For some reason this command is not working. Try using `neofetch` or `screenfetch` as given below.
 
 ### Desktop Environment
 A desktop environment is a collection of applications to work together. This will generally include a window manager, a default display manager, and a set of default applications. 
