@@ -48,7 +48,7 @@ echo $XDG_CURRENT_DESKTOP
 ```
 
 ### All in one
-You can install either `neofetch` or `screenfetch` or `fastfetch` which will provide all of the above information and more.
+You can install either `neofetch` or `screenfetch` or `screenfetch` which will provide all of the above information and more.
 
 Neofetch
 ``` sh 
