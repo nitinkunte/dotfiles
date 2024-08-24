@@ -1,5 +1,16 @@
-# dotfiles
+# DotFiles and Instructions for Setup
 
+
+
+> **NOTE**: The scripts have issues. Till they are fixed, follow the guides given below:
+
+1. [Setup Ubuntu on UTM](./Ubuntu%2024.04.01%20Setup.md)
+2. [Useful Linux Commands](./Useful%20Linux%20Commands.md)
+
+
+---
+
+## Older instructions for Ubuntu Setup
 Repository for my dot files.
 
 Whenever I create a new Ubuntu VM I need to install bunch of stuff on it. This will help automate this process.
