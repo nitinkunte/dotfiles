@@ -1,0 +1,109 @@
+[DEBUG] Target directory: /Users/nitinkunte/Dropbox/Business/NAMK Investments/Bank Statements
+[DEBUG] Current directory: /Users/nitinkunte/Dropbox/Business/NAMK Investments/Bank Statements
+------------------------------------------------
+[PROCESSING FILE #1] Chase 2024-01-31.pdf
+[DEBUG] Extracted date string: '2024-01-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-01-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202402010000
+[DEBUG] Running: touch -t 202402010000 Chase 2024-01-31.pdf
+[SUCCESS] New timestamp: 2024-02-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #2] Chase 2024-02-29.pdf
+[DEBUG] Extracted date string: '2024-02-29'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-02-29 +%Y%m%d0000
+[DEBUG] Computed touch date: 202403010000
+[DEBUG] Running: touch -t 202403010000 Chase 2024-02-29.pdf
+[SUCCESS] New timestamp: 2024-03-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #3] Chase 2024-03-29.pdf
+[DEBUG] Extracted date string: '2024-03-29'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-03-29 +%Y%m%d0000
+[DEBUG] Computed touch date: 202404010000
+[DEBUG] Running: touch -t 202404010000 Chase 2024-03-29.pdf
+[SUCCESS] New timestamp: 2024-04-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #4] Chase 2024-04-30.pdf
+[DEBUG] Extracted date string: '2024-04-30'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-04-30 +%Y%m%d0000
+[DEBUG] Computed touch date: 202405010000
+[DEBUG] Running: touch -t 202405010000 Chase 2024-04-30.pdf
+[SUCCESS] New timestamp: 2024-05-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #5] Chase 2024-05-31.pdf
+[DEBUG] Extracted date string: '2024-05-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-05-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202406010000
+[DEBUG] Running: touch -t 202406010000 Chase 2024-05-31.pdf
+[SUCCESS] New timestamp: 2024-06-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #6] Chase 2024-06-28.pdf
+[DEBUG] Extracted date string: '2024-06-28'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-06-28 +%Y%m%d0000
+[DEBUG] Computed touch date: 202407010000
+[DEBUG] Running: touch -t 202407010000 Chase 2024-06-28.pdf
+[SUCCESS] New timestamp: 2024-07-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #7] Chase 2024-07-31.pdf
+[DEBUG] Extracted date string: '2024-07-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-07-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202408010000
+[DEBUG] Running: touch -t 202408010000 Chase 2024-07-31.pdf
+[SUCCESS] New timestamp: 2024-08-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #8] Chase 2024-08-30.pdf
+[DEBUG] Extracted date string: '2024-08-30'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-08-30 +%Y%m%d0000
+[DEBUG] Computed touch date: 202409010000
+[DEBUG] Running: touch -t 202409010000 Chase 2024-08-30.pdf
+[SUCCESS] New timestamp: 2024-09-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #9] Chase 2024-09-30.pdf
+[DEBUG] Extracted date string: '2024-09-30'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-09-30 +%Y%m%d0000
+[DEBUG] Computed touch date: 202410010000
+[DEBUG] Running: touch -t 202410010000 Chase 2024-09-30.pdf
+[SUCCESS] New timestamp: 2024-10-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #10] Chase 2024-10-31.pdf
+[DEBUG] Extracted date string: '2024-10-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-10-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202411010000
+[DEBUG] Running: touch -t 202411010000 Chase 2024-10-31.pdf
+[SUCCESS] New timestamp: 2024-11-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #11] Chase 2024-11-29.pdf
+[DEBUG] Extracted date string: '2024-11-29'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-11-29 +%Y%m%d0000
+[DEBUG] Computed touch date: 202412010000
+[DEBUG] Running: touch -t 202412010000 Chase 2024-11-29.pdf
+[SUCCESS] New timestamp: 2024-12-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #12] Chase 2024-12-31.pdf
+[DEBUG] Extracted date string: '2024-12-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2024-12-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202501010000
+[DEBUG] Running: touch -t 202501010000 Chase 2024-12-31.pdf
+[SUCCESS] New timestamp: 2025-01-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #13] Chase 2025-01-31.pdf
+[DEBUG] Extracted date string: '2025-01-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2025-01-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202502010000
+[DEBUG] Running: touch -t 202502010000 Chase 2025-01-31.pdf
+[SUCCESS] New timestamp: 2025-02-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #14] Chase 2025-02-28.pdf
+[DEBUG] Extracted date string: '2025-02-28'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2025-02-28 +%Y%m%d0000
+[DEBUG] Computed touch date: 202503010000
+[DEBUG] Running: touch -t 202503010000 Chase 2025-02-28.pdf
+[SUCCESS] New timestamp: 2025-03-01 00:00:00
+------------------------------------------------
+[PROCESSING FILE #15] Chase 2025-03-31.pdf
+[DEBUG] Extracted date string: '2025-03-31'
+[DEBUG] Running: date -j -v1d -v+1m -f %Y-%m-%d 2025-03-31 +%Y%m%d0000
+[DEBUG] Computed touch date: 202504010000
+[DEBUG] Running: touch -t 202504010000 Chase 2025-03-31.pdf
+[SUCCESS] New timestamp: 2025-04-01 00:00:00
+================================================
+Processed 15 files
