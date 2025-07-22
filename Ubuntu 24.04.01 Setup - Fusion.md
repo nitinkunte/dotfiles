@@ -45,7 +45,7 @@ sudo apt install open-vm-tools-desktop
 sudo apt install nemo
 ```
 
-### Resolve long boot time
+### Resolve long boot time 1
 There is issue with duplicate network `systemd-networkd-wait-online.service`  which takes over 2+ minutes to boot. So change default timeout from 2 min to 1 second. There are two options to resolve the issue. Both are essentially the same except the first option is a script file which will help reduce time taken to manually follow the steps in Option 2. 
 
 #### Option 1
@@ -73,6 +73,15 @@ sudo systemctl enable systemd-networkd-wait-online
 ``` sh
 sudo reboot
 ```
+### Resolve long boot time 2
+
+Qualcomm PD maoner service is not really required when running Ubuntu on Silicon Mac as it does not use Qualcom. So you can disable the service to remove the error ***Failed to start od-maoner service - Qualcomm PD maoner service.***. 
+
+``` sh
+sudo systemctl disable pd-mapper.service
+```
+
+
 ----
 ### Software Installs
 Install other necessary software packages
