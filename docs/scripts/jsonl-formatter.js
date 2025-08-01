@@ -1,12 +1,13 @@
+/* --------------  GLOBALS -------------- */
 let formattedData = '';
 
-// Handle file upload
+/* --------------  FILE UPLOAD -------------- */
 $('#fileInput').on('change', function (e) {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (file.size > 50 * 1024 * 1024) { // 50MB limit
-        showError('File too large. Please use files under 50MB.');
+    if (file.size > 50 * 1024 * 1024) { // 50 MB limit
+        showError('File too large. Please use files under 50 MB.');
         return;
     }
 
@@ -16,54 +17,76 @@ $('#fileInput').on('change', function (e) {
         updateInputInfo();
         showSuccess(`File "${file.name}" loaded successfully!`);
     };
-    reader.onerror = function () {
-        showError('Error reading file.');
-    };
+    reader.onerror = () => showError('Error reading file.');
     reader.readAsText(file);
 });
 
-// Update input info
-function updateInputInfo() {
-    const text = $('#inputText').val();
-    const lines = text.trim() ? text.split('\n').length : 0;
-    const bytes = new Blob([text]).size;
-    $('#inputInfo').text(`${lines} lines, ${formatBytes(bytes)}`);
-}
+/* --------------  VALIDATE JSONL -------------- */
+async function validateJSONL() {
+    const input = $('#inputText').val().trim();
+    if (!input) {
+        showError('Please provide input data.');
+        return;
+    }
 
-// Update output info
-function updateOutputInfo() {
-    const text = $('#outputText').val();
-    const lines = text.trim() ? text.split('\n').length : 0;
-    const bytes = new Blob([text]).size;
-    $('#outputInfo').text(`${lines} lines, ${formatBytes(bytes)}`);
-
-    const inputBytes = new Blob([$('#inputText').val()]).size;
-    const ratio = inputBytes > 0 ? ((bytes / inputBytes) * 100).toFixed(1) : 0;
-    $('#compressionRatio').text(`${ratio}%`);
-}
-
-// Format bytes
-function formatBytes(bytes) {
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
-// Clear input
-function clearInput() {
-    $('#inputText').val('');
-    $('#outputText').val('');
-    $('#fileInput').val('');
-    formattedData = '';
-    updateInputInfo();
-    updateOutputInfo();
-    $('#downloadBtn').prop('disabled', true);
     hideMessages();
+    $('#validationResults').hide();
+    $('#validateBtn').prop('disabled', true);
+    $('#progressBar').show();
+    $('#progressFill').css('width', '0%');
+
+    const lines = input.split('\n');
+    const totalLines = lines.length;
+    let processed = 0;
+    let valid = 0;
+    let invalid = 0;
+    const maxErrorsToShow = 10;
+    const errors = [];
+
+    const chunkSize = 1000;
+    for (let i = 0; i < lines.length; i += chunkSize) {
+        const chunk = lines.slice(i, i + chunkSize);
+        for (const rawLine of chunk) {
+            const line = rawLine.trim();
+            if (!line) continue;
+
+            try {
+                JSON.parse(line);
+                valid++;
+            } catch (e) {
+                invalid++;
+                if (errors.length < maxErrorsToShow) {
+                    errors.push(`Line ${processed + 1}: ${e.message}`);
+                }
+            }
+            processed++;
+        }
+        const progress = (processed / totalLines) * 100;
+        $('#progressFill').css('width', progress + '%');
+        await new Promise(r => setTimeout(r, 0)); // keep UI responsive
+    }
+
+    $('#progressBar').hide();
+    $('#validateBtn').prop('disabled', false);
+
+    const $vr = $('#validationResults');
+    if (invalid === 0) {
+        $vr.removeClass('invalid').addClass('valid')
+            .html(`✅ All ${valid.toLocaleString()} lines are valid JSON.`)
+            .show();
+    } else {
+        let html = `❌ ${invalid.toLocaleString()} invalid line(s) found out of ${totalLines.toLocaleString()}.`;
+        if (errors.length) {
+            html += '<br><br><strong>First few errors:</strong><ul>';
+            errors.forEach(err => html += `<li>${err}</li>`);
+            html += '</ul>';
+            if (invalid > maxErrorsToShow) html += `<em>… and ${invalid - maxErrorsToShow} more.</em>`;
+        }
+        $vr.removeClass('valid').addClass('invalid').html(html).show();
+    }
 }
 
-// Format JSONL with streaming for large files
+/* --------------  FORMAT JSONL (unchanged) -------------- */
 async function formatJSONL() {
     const input = $('#inputText').val().trim();
     if (!input) {
@@ -94,18 +117,11 @@ async function formatJSONL() {
                 if (!line) continue;
 
                 try {
-                    // 1. parse the JSON
                     const parsed = JSON.parse(line);
-
-                    // 2. stringify with pretty-printing
                     let pretty = JSON.stringify(parsed, null, 2);
-
-                    // 3. turn literal "\n" into real newlines so it looks nice in the textarea
                     pretty = pretty.replace(/\\n/g, '\n');
-
                     result += pretty + (i + j < totalLines - 1 ? '\n' : '');
                 } catch (e) {
-                    // fallback: keep raw line
                     result += line + (i + j < totalLines - 1 ? '\n' : '');
                     errors++;
                 }
@@ -114,7 +130,7 @@ async function formatJSONL() {
             processedLines += chunk.length;
             const progress = (processedLines / totalLines) * 100;
             $('#progressFill').css('width', progress + '%');
-            await new Promise(resolve => setTimeout(resolve, 0)); // UI update
+            await new Promise(resolve => setTimeout(resolve, 0));
         }
 
         formattedData = result;
@@ -139,13 +155,12 @@ async function formatJSONL() {
     }
 }
 
-// Download formatted JSONL
+/* --------------  DOWNLOAD / UTILS (unchanged) -------------- */
 function downloadJSONL() {
     if (!formattedData) {
         showError('No formatted data to download.');
         return;
     }
-
     const blob = new Blob([formattedData], { type: 'application/jsonl' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -157,26 +172,49 @@ function downloadJSONL() {
     URL.revokeObjectURL(url);
 }
 
-// Show error message
-function showError(message) {
-    $('#errorMsg').text(message).show();
-    $('#successMsg').hide();
+function updateInputInfo() {
+    const text = $('#inputText').val();
+    const lines = text.trim() ? text.split('\n').length : 0;
+    const bytes = new Blob([text]).size;
+    $('#inputInfo').text(`${lines} lines, ${formatBytes(bytes)}`);
 }
 
-// Show success message
-function showSuccess(message) {
-    $('#successMsg').text(message).show();
-    $('#errorMsg').hide();
+function updateOutputInfo() {
+    const text = $('#outputText').val();
+    const lines = text.trim() ? text.split('\n').length : 0;
+    const bytes = new Blob([text]).size;
+    $('#outputInfo').text(`${lines} lines, ${formatBytes(bytes)}`);
+
+    const inputBytes = new Blob([$('#inputText').val()]).size;
+    const ratio = inputBytes > 0 ? ((bytes / inputBytes) * 100).toFixed(1) : 0;
+    $('#compressionRatio').text(`${ratio}%`);
 }
 
-// Hide messages
-function hideMessages() {
-    $('#errorMsg, #successMsg').hide();
+function formatBytes(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-// Update input info on change
+function clearInput() {
+    $('#inputText').val('');
+    $('#outputText').val('');
+    $('#fileInput').val('');
+    formattedData = '';
+    updateInputInfo();
+    updateOutputInfo();
+    $('#downloadBtn').prop('disabled', true);
+    hideMessages();
+    $('#validationResults').hide();
+}
+
+function showError(msg) { $('#errorMsg').text(msg).show(); $('#successMsg').hide(); }
+function showSuccess(msg) { $('#successMsg').text(msg).show(); $('#errorMsg').hide(); }
+function hideMessages() { $('#errorMsg, #successMsg').hide(); }
+
+/* --------------  INITIAL SETUP -------------- */
 $('#inputText').on('input', updateInputInfo);
-
-// Initial setup
 updateInputInfo();
 updateOutputInfo();

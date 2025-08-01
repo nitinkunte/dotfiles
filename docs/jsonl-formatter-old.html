@@ -13,10 +13,9 @@
 
 <body>
     <div class="container">
-        <h1>JSONL Formatter & Validator</h1>
-        <p class="subtitle">Efficiently format and validate large JSONL files (supports files over 20 MB)</p>
+        <h1>JSONL Formatter</h1>
+        <p class="subtitle">Efficiently format large JSONL files (supports files over 20MB)</p>
 
-        <!-- ------------- INPUT SECTION ------------- -->
         <div class="input-section">
             <div class="section-header">
                 <h2>Input JSONL</h2>
@@ -25,17 +24,16 @@
             <textarea id="inputText" placeholder="Paste your JSONL data here or upload a file..."></textarea>
 
             <div class="button-group">
-                <label for="fileInput" class="file-input-label">📁 Upload JSONL File</label>
+                <label for="fileInput" class="file-input-label">
+                    📁 Upload JSONL File
+                </label>
                 <input type="file" id="fileInput" accept=".jsonl,.json,.txt">
+
                 <button class="danger-btn" onclick="clearInput()">🗑️ Clear</button>
             </div>
         </div>
 
-        <!-- ------------- ACTION BUTTONS ------------- -->
         <div class="button-group">
-            <button id="validateBtn" class="warning-btn" onclick="validateJSONL()">
-                ✅ Validate JSONL
-            </button>
             <button id="formatBtn" class="primary-btn" onclick="formatJSONL()">
                 ✨ Format JSONL
             </button>
@@ -44,17 +42,13 @@
             </button>
         </div>
 
-        <!-- ------------- PROGRESS / MESSAGES ------------- -->
         <div class="progress-bar" id="progressBar">
             <div class="progress-fill" id="progressFill"></div>
         </div>
+
         <div class="error" id="errorMsg"></div>
         <div class="success" id="successMsg"></div>
 
-        <!-- ------------- VALIDATION RESULTS ------------- -->
-        <div id="validationResults"></div>
-
-        <!-- ------------- OUTPUT SECTION ------------- -->
         <div class="output-section">
             <div class="section-header">
                 <h2>Formatted JSONL</h2>
